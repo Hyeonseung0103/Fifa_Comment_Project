@@ -24,23 +24,23 @@
 
 5. 도출된 감성 점수를 기존의 평점 점수와 결합하여 새로운 감정 점수를 만들고, 이를 기반으로 추천 시스템을 개발한다.
 
-![image](https://user-images.githubusercontent.com/97672187/178266824-6d1fece3-59f8-4224-89a1-b28c485dcad0.png)
+<center>![image](https://user-images.githubusercontent.com/97672187/178266824-6d1fece3-59f8-4224-89a1-b28c485dcad0.png)</center>
 
 !기존에 존재하는 평점 점수를 사용하지 않고 감성사전을 사용하여 감성 점수를 새로 계산한 이유는?
 
 -> 사용자마자 평점을 주는 기준이 매우 다르기 때문에 보다 객관적인 점수를 반영하기 위해 군산대에서 개발한 KNU 한국어 감성사전 모델을 사용하여 각 댓글에 감성점수를 매겼다. 감성 사전에는 밑의 사진처럼 단어마다 감성 점수가 저장되어 있고, 편의상 신조어와 같이 사전에 없는 단어는 모두 감성 점수를 0으로 했다. 한 댓글의 감성점수는 댓글을 이루는 단어들의 감성 점수를 모두 합쳐서 도출했다.
 
-![image](https://user-images.githubusercontent.com/97672187/178268547-ce671b2d-0d05-4fa0-a10b-1a2e2379479d.png)
+<center>![image](https://user-images.githubusercontent.com/97672187/178268547-ce671b2d-0d05-4fa0-a10b-1a2e2379479d.png)</center>
 
 ## 데이터 설명
 프로젝트에서 사용한 데이터는 피파인벤 홈페이지의 선수 댓글 카테고리에서 크롤링 했고, 20만개의 행과 사용자 ID, 선수 이름, 포지션, 댓글, 평점 점수라는 5개의 열로 이루어져있다.
 
-![image](https://user-images.githubusercontent.com/97672187/178269560-d559d2dd-7e90-4af4-b5da-7c633a023199.png)
+<center>![image](https://user-images.githubusercontent.com/97672187/178269560-d559d2dd-7e90-4af4-b5da-7c633a023199.png)</center>
 
 수집한 데이터는 감성 사전으로 도출한 감성 점수를 기반으로 긍정 부정으로 나눴고, 중립을 나타내는 0의 점수는 편의상 부정으로 라벨링 했다. 따라서 부정인 댓글이 긍정인 댓글보다
 약 3배 이상 많은 불균형 데이터가 되었다.
 
-![image](https://user-images.githubusercontent.com/97672187/178269952-1a8e8a76-8f6e-4703-82d2-a3e9c15dc9df.png)
+<center>![image](https://user-images.githubusercontent.com/97672187/178269952-1a8e8a76-8f6e-4703-82d2-a3e9c15dc9df.png)</center>
 
 
 ## 모델링
@@ -65,11 +65,11 @@
 
 1. 추천시스템에 사용할 평점 데이터는 기존의 평점 데이터에 감성 점수를 반영하기 위해 먼저 감성 점수를 Scaling 해주었고, 긍정단어는 1을 더하고, 부정단어에는 1에서 Scaling된 점수를 뺀 후 기존의 평점과 곱해 감성 점수가 반영된 새로운 평점 변수를 생성했다.
 
-![image](https://user-images.githubusercontent.com/97672187/178272551-42b83218-1469-4925-ae43-44f0214d61c4.png)
+<center>![image](https://user-images.githubusercontent.com/97672187/178272551-42b83218-1469-4925-ae43-44f0214d61c4.png)</center>
 
 2. 아이템이 되는 선수이름을 행, 사용자의 이름을 열로 만들어서 KNN 모델을 사용해 아이템 기반 협업 필터링을 진행했다. 아이템 간의 유사도는 코사인 유사도를 활용했고, 사용자가 입력한 선수 본인을 포함한 가장 유사도가 높은 Top 5 선수를 추천해주는 함수를 만들었다.
 
-![image](https://user-images.githubusercontent.com/97672187/178272762-5ddac1a3-fe58-4488-8556-45c105fb8d20.png)
+<center>![image](https://user-images.githubusercontent.com/97672187/178272762-5ddac1a3-fe58-4488-8556-45c105fb8d20.png)</center>
 
 한국 선수인 박지성 선수를 입력했을 때는 한국 선수가, 리오넬 메시 선수를 입력했을 때는 메시와 뛰고 있거나, 뛰어본 적이 있는 선수가 추천된 것을 확인할 수 있었다.
 
